@@ -10,11 +10,11 @@ using TelegramBotAspNetCore.Controllers;
 using ServiceStack.Configuration;
 
 
-//учебный дополнен на основе рабочего TelegramBotVer4_8
+//ГіГ·ГҐГЎГ­Г»Г© Г¤Г®ГЇГ®Г«Г­ГҐГ­ Г­Г  Г®Г±Г­Г®ГўГҐ Г°Г ГЎГ®Г·ГҐГЈГ® TelegramBotVer4_8
 namespace TelegramBotAspNetCore;
 internal class Program
 {
-    const string TOKEN = "7169505210:AAEBnzeSX666BGha_gG3O3l0VaU3zogdCQI";
+    const string TOKEN = "TOKEN";
     const string connectionString = "Server=localhost\\SQLEXPRESS;Database=DB;Trusted_Connection=True;TrustServerCertificate=True;";
 
 
@@ -25,19 +25,19 @@ internal class Program
           
 
         Console.OutputEncoding = Encoding.Unicode;
-        //Объект, отвечающий за постоянный жизненный цикл приложения
+        //ГЋГЎГєГҐГЄГІ, Г®ГІГўГҐГ·Г ГѕГ№ГЁГ© Г§Г  ГЇГ®Г±ГІГ®ГїГ­Г­Г»Г© Г¦ГЁГ§Г­ГҐГ­Г­Г»Г© Г¶ГЁГЄГ« ГЇГ°ГЁГ«Г®Г¦ГҐГ­ГЁГї
         var host = new HostBuilder()
-            .ConfigureServices((hostContext, services) => ConfigureServices(services )) //задаём конфигурацию
-            .UseConsoleLifetime() // позволяет поддерживать  приложение активным в консоли
-            .Build(); //собираем
+            .ConfigureServices((hostContext, services) => ConfigureServices(services )) //Г§Г Г¤Г ВёГ¬ ГЄГ®Г­ГґГЁГЈГіГ°Г Г¶ГЁГѕ
+            .UseConsoleLifetime() // ГЇГ®Г§ГўГ®Г«ГїГҐГІ ГЇГ®Г¤Г¤ГҐГ°Г¦ГЁГўГ ГІГј  ГЇГ°ГЁГ«Г®Г¦ГҐГ­ГЁГҐ Г ГЄГІГЁГўГ­Г»Г¬ Гў ГЄГ®Г­Г±Г®Г«ГЁ
+            .Build(); //Г±Г®ГЎГЁГ°Г ГҐГ¬
 
 
-        Console.WriteLine("Сервис запущен");
+        Console.WriteLine("Г‘ГҐГ°ГўГЁГ± Г§Г ГЇГіГ№ГҐГ­");
 
-        await host.RunAsync(); //запускаем сервис
+        await host.RunAsync(); //Г§Г ГЇГіГ±ГЄГ ГҐГ¬ Г±ГҐГ°ГўГЁГ±
         var environment = Environment.GetEnvironmentVariable(TOKEN);
 
-        Console.WriteLine("Сервис остановлен");
+        Console.WriteLine("Г‘ГҐГ°ГўГЁГ± Г®Г±ГІГ Г­Г®ГўГ«ГҐГ­");
 
 
 
@@ -46,15 +46,15 @@ internal class Program
             AppSettings appSettings = BuildAppSettings();
             services.AddSingleton(appSettings);
 
-            //Подключем контроллеры сообщений и кнопок
+            //ГЏГ®Г¤ГЄГ«ГѕГ·ГҐГ¬ ГЄГ®Г­ГІГ°Г®Г«Г«ГҐГ°Г» Г±Г®Г®ГЎГ№ГҐГ­ГЁГ© ГЁ ГЄГ­Г®ГЇГ®ГЄ
             services.AddTransient<DefaultMessageController>();
             services.AddTransient<TaskMessageController>();
             services.AddTransient<InlineKeyboardController>();
 
-            //регистрируем объект TelegramBotClient  с токеном подключения
+            //Г°ГҐГЈГЁГ±ГІГ°ГЁГ°ГіГҐГ¬ Г®ГЎГєГҐГЄГІ TelegramBotClient  Г± ГІГ®ГЄГҐГ­Г®Г¬ ГЇГ®Г¤ГЄГ«ГѕГ·ГҐГ­ГЁГї
             services.AddSingleton<ITelegramBotClient>(provider => new TelegramBotClient(appSettings.BotToken));
 
-            //Регистрируем постоянно активный сервис бота
+            //ГђГҐГЈГЁГ±ГІГ°ГЁГ°ГіГҐГ¬ ГЇГ®Г±ГІГ®ГїГ­Г­Г® Г ГЄГІГЁГўГ­Г»Г© Г±ГҐГ°ГўГЁГ± ГЎГ®ГІГ 
             services.AddHostedService<Bot>();
         }
 
